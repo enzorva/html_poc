@@ -49,7 +49,7 @@ class _SecondPageState extends State<SecondPage> {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autorização de Ocupação</title>
+    <title>Autorização de Ocupação - Bloco Suva (Studio)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,31 +63,69 @@ class _SecondPageState extends State<SecondPage> {
             margin-top: 40px;
             text-align: center;
         }
+        .rules {
+            margin-top: 30px;
+            border-top: 2px solid #000;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>AUTORIZAÇÃO PARA OCUPAÇÃO</h1>
-    <p>Eu autorizo as seguintes pessoas a ocupar o apartamento:</p>
+
+    <h1>AUTORIZAÇÃO PARA OCUPAÇÃO DE UNIDADE – BLOCO SUVA (STUDIO)</h1>
+
+    <p>Eu, <strong>Eryk Azevedo</strong>, proprietário da unidade no.: <strong>48C Bloco Suva (STUDIO)</strong>, 
+    AUTORIZO as pessoas abaixo relacionadas a ocupar meu apartamento no período de: 
+    <strong>${widget.checkIn} a ${widget.checkOut}</strong>.</p>
+
+    <h2>Ocupantes</h2>
     <ul>
         <li>${widget.name1}</li>
         <li>${widget.name2}</li>
         <li>${widget.name3}</li>
         <li>${widget.name4}</li>
     </ul>
-    <p><strong>Período:</strong> ${widget.checkIn} a ${widget.checkOut}</p>
-    <p><strong>Carro:</strong> ${widget.carModel}</p>
+
+    <h2>Veículo</h2>
+    <p><strong>Marca/Modelo:</strong> ${widget.carModel}</p>
+
+    <p>Os ocupantes têm total conhecimento e estão de acordo com as normas do Regulamento Interno e Convenção do Condomínio Residencial Fiji.</p>
+
+    <div class="signature">
+        <p>Data: <strong>${widget.checkIn}</strong></p>
+        <p>___________________________</p>
+        <p>Assinatura do proprietário</p>
+    </div>
+
+    <div class="rules">
+        <h2>MANUAL DO LOCATÁRIO</h2>
+        <ul>
+            <li>PROIBIDO pendurar toalhas ou roupas no parapeito das varandas.</li>
+            <li>PROIBIDO bebidas e comidas no entorno e dentro da piscina.</li>
+            <li>PROIBIDO crianças menores de 12 anos desacompanhadas dos pais ou responsáveis na área da piscina.</li>
+            <li>OBRIGATÓRIO o uso da ducha antes de entrar na piscina.</li>
+            <li>PROIBIDO som alto e barulhos que incomodem os outros condôminos, independente do horário.</li>
+            <li>NÃO É PERMITIDO deixar pranchas, bolas, cooler, cadeiras ou quaisquer outros objetos nas áreas sociais do condomínio.</li>
+            <li>PROIBIDO subir molhado pelos elevadores.</li>
+            <li>NÃO É PERMITIDO a inquilinos/cessionários temporários trazer e receber visitantes nas áreas comuns.</li>
+        </ul>
+    </div>
+
 </body>
 </html>
     ''';
 
       final output = await getTemporaryDirectory();
+      print('Temporary directory: ${output.path}');
       final file = File('${output.path}/example.pdf');
 
       final pdf = pdf_widgets.Document();
       final widgets = await htmltopdf.HTMLToPdf().convert(body);
-      pdf.addPage(pw.MultiPage(build: (context) => widgets));
+      print('HTML converted to PDF widgets successfully.');
 
+      pdf.addPage(pw.MultiPage(build: (context) => widgets));
       await file.writeAsBytes(await pdf.save());
+      print('PDF saved successfully at ${file.path}');
 
       setState(() {
         pdfPath = file.path;
