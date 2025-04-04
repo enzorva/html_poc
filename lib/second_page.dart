@@ -1,12 +1,12 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:htmltopdfwidgets/htmltopdfwidgets.dart' as htmltopdf;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/widgets.dart' as pdf_widgets;
+import 'package:universal_html/html.dart' as html;
 
 class SecondPage extends StatefulWidget {
   final String name1;
@@ -115,21 +115,56 @@ class _SecondPageState extends State<SecondPage> {
 </html>
     ''';
 
-      final output = await getTemporaryDirectory();
-      print('Temporary directory: ${output.path}');
-      final file = File('${output.path}/example.pdf');
-
-      final pdf = pdf_widgets.Document();
+      final pdf = pw.Document();
       final widgets = await htmltopdf.HTMLToPdf().convert(body);
       print('HTML converted to PDF widgets successfully.');
 
       pdf.addPage(pw.MultiPage(build: (context) => widgets));
-      await file.writeAsBytes(await pdf.save());
-      print('PDF saved successfully at ${file.path}');
 
-      setState(() {
-        pdfPath = file.path;
-      });
+      if (kIsWeb) {
+        // Salvar na web
+        final pdfBytes = await pdf.save();
+        final blob = html.Blob([pdfBytes], 'application/pdf');
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        // faz o download do arquivo
+        // final anchor = html.AnchorElement(href: url)
+        //   ..target = 'blank'
+        //   ..download = 'example.pdf'
+        //   ..click();
+
+        // Abrir o PDF em uma nova aba
+        html.window.open(url, '_blank');
+
+        html.Url.revokeObjectUrl(url);
+        print('PDF saved successfully for web.');
+      } else {
+        // Salvar em dispositivos móveis ou desktop
+        final output = await getTemporaryDirectory();
+        print('Temporary directory: ${output.path}');
+        final file = File('${output.path}/example.pdf');
+        await file.writeAsBytes(await pdf.save());
+        print('PDF saved successfully at ${file.path}');
+
+        setState(() {
+          pdfPath = file.path;
+        });
+      }
+
+      // final output = await getTemporaryDirectory();
+      // print('Temporary directory: ${output.path}');
+      // final file = File('${output.path}/example.pdf');
+
+      // final pdf = pdf_widgets.Document();
+      // final widgets = await htmltopdf.HTMLToPdf().convert(body);
+      // print('HTML converted to PDF widgets successfully.');
+
+      // pdf.addPage(pw.MultiPage(build: (context) => widgets));
+      // await file.writeAsBytes(await pdf.save());
+      // print('PDF saved successfully at ${file.path}');
+
+      // setState(() {
+      //   pdfPath = file.path;
+      // });
     } catch (e) {
       print('Error generating PDF: $e');
     }
