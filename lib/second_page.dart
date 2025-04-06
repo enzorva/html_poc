@@ -44,100 +44,82 @@ class _SecondPageState extends State<SecondPage> {
 
   Future<void> _generatePdf() async {
     try {
-      final pdf = pw.Document();
+      final String body = '''
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Autorização de Ocupação</title>
+</head>
+<body style="font-family: Arial, sans-serif;">
 
-      pdf.addPage(
-        pw.Page(
-          build: (context) => pw.Column(
-            children: [
-              pw.Text('Autorização para Ocupação', style: pw.TextStyle(fontSize: 18, fontWeight: pw.FontWeight.bold)),e>Autorização de Ocupação - Fiji 48C</title>
-              pw.SizedBox(height: 20),
-              pw.Text('Eu, Eryk Azevedo, autorizo as pessoas abaixo a ocupar meu apartamento no período de:'),
-              pw.SizedBox(height: 20),
-              pw.Table.fromTextArray(argin-top: 20px;">
-                headers: ['Nome', 'Documento'],ad>tyle="text-align: center; margin-bottom: 20px;">
-                data: [
-                  ['Paulo Rodrigues', 'RG 41.105.912/9'],lor: #f2f2f2;">Nome</th>
-                  ['Alessandra Silva', 'RG 45.749.576/5'],th style="border: 1px solid #000; padding: 8px; background-color: #f2f2f2;">Documento</th>
-                ],tr>yle="text-align: center; text-transform: uppercase;">Autorização para Ocupação de Unidade - Bloco Suva (Studio)</h2>
-                border: pw.TableBorder.all(),
-                headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                cellAlignment: pw.Alignment.centerLeft,>strong>Eryk Azevedo</strong>, proprietário da unidade no.: <strong>48C Bloco Suva (STUDIO)</strong>,
-                headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),<td style="border: 1px solid #000; padding: 8px;">Paulo Rodrigues</td>ong>AUTORIZO</strong> as pessoas abaixo relacionadas a ocupar meu apartamento no período de:
-              ),>
-            ],
-          ),>
-        ),d style="border: 1px solid #000; padding: 8px;">Alessandra Silva</td>le="margin-top: 30px;">
-      ); <td style="border: 1px solid #000; padding: 8px;">RG 45.749.576/5</td>rong>Nomes / Documentos</strong>
-/tr>ble style="width: 100%; border: 1px solid #000; border-collapse: collapse; margin-top: 15px;">
-      if (kIsWeb) {ody>head>
-        final pdfBytes = await pdf.save();  </table>        <tr>
-        final blob = html.Blob([pdfBytes], 'application/pdf');>Nome</th>
-        final url = html.Url.createObjectUrlFromBlob(blob);</html>          <th style="border: 1px solid #000; padding: 10px; text-align: left; background-color: #f2f2f2;">Documento</th>
-        html.window.open(url, '_blank');
-        html.Url.revokeObjectUrl(url);
-        print('PDF saved successfully for web.');
-      } else {        <tr>
-        final output = await getTemporaryDirectory();gues Ferrage Junior</td>
-        final file = File('${output.path}/example.pdf');      final widgets = await htmltopdf.HTMLToPdf().convert(body);          <td style="border: 1px solid #000; padding: 10px; text-align: left;">RG 41.105.912/9</td>
-        await file.writeAsBytes(await pdf.save());onverted to PDF widgets successfully.'); // Debug log
-        print('PDF saved successfully at ${file.path}');
-t-align: left;">Alessandra Silva Ferrage</td>
-        setState(() {
-          pdfPath = file.path;
-        });e();
-      }cation/pdf');ing: 10px; text-align: left;">Isabela</td>
-    } catch (e) {url = html.Url.createObjectUrlFromBlob(blob);style="border: 1px solid #000; padding: 10px; text-align: left;">CPF 573.216.898-24</td>
-      print('Error generating PDF: $e');
-    }
-  }
+  <h2 style="text-align: center;">Autorização para Ocupação</h2>
+  <p>
+    Eu, <strong>${widget.name1}</strong>, autorizo as pessoas abaixo a ocupar meu apartamento no período de:
+    <strong>${widget.checkIn} a ${widget.checkOut}</strong>.
+  </p>
 
-  @override        final output = await getTemporaryDirectory();
-  Widget build(BuildContext context) {File('${output.path}/example.pdf');top: 30px;">
-    return Scaffold(s(await pdf.save());odelo / Placa</strong>
-      appBar: AppBar(title: const Text('Second Page')),nt('PDF saved successfully at ${file.path}');style="width: 100%; border: 1px solid #000; border-collapse: collapse; margin-top: 15px;">
-      body:
-          pdfPath == null() {
-              ? const Center(child: CircularProgressIndicator())ng: 10px; text-align: left; background-color: #f2f2f2;">Marca / Modelo</th>
-              : Column(   });     <th style="border: 1px solid #000; padding: 10px; text-align: left; background-color: #f2f2f2;">Cor</th>
-                children: [   }       <th style="border: 1px solid #000; padding: 10px; text-align: left; background-color: #f2f2f2;">Placa</th>
-                  Expanded(    } catch (e) {        </tr>
-                    child: PDFView(('Error generating PDF: $e');ad>
-                      filePath: pdfPath,
-                      enableSwipe: true,
-                      swipeHorizontal: false,
-                      autoSpacing: false,td style="border: 1px solid #000; padding: 10px; text-align: left;">Prata</td>
-                      pageFling: false,xt context) {er: 1px solid #000; padding: 10px; text-align: left;">QMT 5E79</td>
-                      pageSnap: false,
-                      fitPolicy: FitPolicy.BOTH,tle: const Text('Second Page')),
-                      preventLinkNavigation: true, // very important
-                      onRender: (pages) {
-                        print("PDF rendered with $pages pages."); CircularProgressIndicator())
-                      },
-                      onError: (error) {
-                        print('Error rendering PDF: $error'); as normas do
-                      },ínio Residencial Fiji.
-                      onPageError: (page, error) {,
-                        print('Error on page $page: $error');e,
-                      },
-                      onViewCreated: (PDFViewController controller) {
-                        // You can save the controller for later usen: center;">
-                      },
-                    ),tPolicy: FitPolicy.BOTH,rietário
-                  ),ion: true, // very important
-                ],
-              ),print("PDF rendered with $pages pages.");
-    );
-  }</h2>
-}print('Error rendering PDF: $error');eft: 20px;">
+  <br><strong>Nomes / Documentos</strong>
+  <table border="1" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <th style="padding: 8px;">Nome</th>
+      <th style="padding: 8px;">Documento</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px;">${widget.name2}</td>
+      <td style="padding: 8px;">RG 41.105.912/9</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px;">${widget.name3}</td>
+      <td style="padding: 8px;">RG 45.749.576/5</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px;">${widget.name4}</td>
+      <td style="padding: 8px;">CPF 573.216.898-24</td>
+    </tr>
+  </table>
 
+  <br><strong>Veículo: Marca / Modelo / Placa</strong>
+  <table border="1" style="width: 100%; border-collapse: collapse;">
+    <tr>
+      <th style="padding: 8px;">Marca / Modelo</th>
+      <th style="padding: 8px;">Cor</th>
+      <th style="padding: 8px;">Placa</th>
+    </tr>
+    <tr>
+      <td style="padding: 8px;">${widget.carModel}</td>
+      <td style="padding: 8px;">Prata</td>
+      <td style="padding: 8px;">QMT 5E79</td>
+    </tr>
+  </table>
 
+  <br><p>
+    Os ocupantes têm total conhecimento e estão de acordo com as normas do Regulamento Interno e Convenção do Condomínio Residencial Fiji.
+  </p>
+  <p><strong>Data:</strong> ${widget.checkIn}</p>
+  <p style="text-align: center; margin-top: 50px;">
+    ___________________________<br>
+    Assinatura do proprietário
+  </p>
 
+  <h3 style="text-align: center;">Manual do Locatário</h3>
+  <ul>
+    <li>PROIBIDO PENDURAR TOALHAS/ROUPAS NO PARAPEITO DAS VARANDAS;</li>
+    <li>PROIBIDO BEBIDAS E COMIDAS NO ENTORNO E DENTRO DA PISCINA;</li>
+    <li>PROIBIDO CRIANÇAS MENORES DE 12 ANOS DESACOMPANHADAS DOS PAIS OU RESPONSÁVEIS NA ÁREA DA PISCINA;</li>
+    <li>OBRIGATÓRIO O USO DA DUCHA ANTES DE ENTRAR NA PISCINA;</li>
+    <li>PROIBIDO SOM ALTO E BARULHOS QUE INCOMODEM OS OUTROS CONDÔMINOS, INDEPENDENTE DO HORÁRIO;</li>
+    <li>NÃO É PERMITIDO DEIXAR PRANCHAS, BOLAS, COOLER, CADEIRAS OU OUTROS OBJETOS NAS ÁREAS SOCIAIS DO CONDOMÍNIO;</li>
+    <li>PROIBIDO SUBIR MOLHADO PELOS ELEVADORES;</li>
+    <li>NÃO É PERMITIDO A INQUILINOS/CESSIONÁRIOS TEMPORÁRIOS TRAZER E RECEBER VISITANTES NAS ÁREAS COMUNS.</li>
+  </ul>
 
-}  }    );
 </body>
 </html>
+
     ''';
+
+      print('HTML to be converted: $body'); // Debug log
 
       final pdf = pw.Document();
       final widgets = await htmltopdf.HTMLToPdf().convert(body);
