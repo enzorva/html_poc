@@ -56,8 +56,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final int _counter = 0;
-
   // Add controllers for new input fields
   final TextEditingController _name1Controller = TextEditingController();
   final TextEditingController _name2Controller = TextEditingController();

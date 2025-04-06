@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:universal_html/html.dart' as html;
 
+import 'base64_image.dart'; // Import the base64Image variable
+
 class SecondPage extends StatefulWidget {
   final String name1;
   final String name2;
@@ -49,11 +51,13 @@ class _SecondPageState extends State<SecondPage> {
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title> <strong>AUTORIZAÇÃO PARA OCUPAÇÃO DE UNIDADE - BLOCO SUVA (STUDIO)</strong> </title>
+  <title>AUTORIZAÇÃO PARA OCUPAÇÃO DE UNIDADE - BLOCO SUVA (STUDIO)</title>
 </head>
 <body style="font-family: Arial, sans-serif;">
-
-  <h2 style="text-align: center;">Autorização para Ocupação</h2>
+  <div style="text-align: center; margin-bottom: 5px;">
+    <img src="data:image/png;base64,$base64Image" alt="Logo" style="max-width: 300px;">
+  </div>
+  <h1 style="text-align: center;"><strong>AUTORIZAÇÃO PARA OCUPAÇÃO DE UNIDADE - BLOCO SUVA (STUDIO)</strong></h1>
   <p>
     Eu, <strong>${widget.name1}</strong>,  proprietário da unidade no.: <strong>48C  Bloco Suva (STUDIO)</strong>, AUTORIZO as 
 pessoas abaixo relacionadas, a ocupar meu apartamento no período de :
@@ -118,7 +122,7 @@ pessoas abaixo relacionadas, a ocupar meu apartamento no período de :
 </body>
 </html>
 
-    ''';
+      ''';
 
       print('HTML to be converted: $body'); // Debug log
 
