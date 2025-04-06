@@ -49,14 +49,15 @@ class _SecondPageState extends State<SecondPage> {
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Autorização de Ocupação</title>
+  <title> <strong>AUTORIZAÇÃO PARA OCUPAÇÃO DE UNIDADE - BLOCO SUVA (STUDIO)</strong> </title>
 </head>
 <body style="font-family: Arial, sans-serif;">
 
   <h2 style="text-align: center;">Autorização para Ocupação</h2>
   <p>
-    Eu, <strong>${widget.name1}</strong>, autorizo as pessoas abaixo a ocupar meu apartamento no período de:
-    <strong>${widget.checkIn} a ${widget.checkOut}</strong>.
+    Eu, <strong>${widget.name1}</strong>,  proprietário da unidade no.: <strong>48C  Bloco Suva (STUDIO)</strong>, AUTORIZO as 
+pessoas abaixo relacionadas, a ocupar meu apartamento no período de :
+    <strong>${widget.checkIn}</strong> a <strong>${widget.checkOut}</strong>.
   </p>
 
   <br><strong>Nomes / Documentos</strong>
